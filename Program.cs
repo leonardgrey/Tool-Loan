@@ -6,67 +6,28 @@ namespace ToolLoan
 {
     class Program
     {
-        Output Outputs = new Output();
-
         static void Main(string[] args)
-        {
-            GlobalVariables globalVars = new GlobalVariables();
-
-
-
-
-            ToolSelectionTest();
-        }
-
-        private void TestResize()
-        {
-            Tool Tool = new Tool("Tool name 1", 1, new[] {1, 1 });
-
-            ToolCollection ToolCollection = new ToolCollection();
-            Console.WriteLine(ToolCollection.CollectionOfTools.Length);
-
-            ToolCollection.ResizeArray(ToolCollection.CollectionOfTools);
-            Console.WriteLine(ToolCollection.CollectionOfTools.Length);
-
-            ToolCollection.ResizeArray(ToolCollection.CollectionOfTools);
-            Console.WriteLine(ToolCollection.CollectionOfTools.Length);
-
-            ToolCollection.ResizeArray(ToolCollection.CollectionOfTools);
-            Console.WriteLine(ToolCollection.CollectionOfTools.Length);
-
-            ToolCollection.ResizeArray(ToolCollection.CollectionOfTools);
-            Console.WriteLine(ToolCollection.CollectionOfTools.Length);
-        }
-
-        public static void ToolSelectionTest()
-        {
-            Output Outputs = new Output();
+        {   
+            ToolLibrarySystem librarySystem = new ToolLibrarySystem();
             GlobalVariables vars = new GlobalVariables();
-            var i = Outputs.SelectTool();
-            Console.WriteLine(vars.ToolCategories[i[0]]);
-            Console.WriteLine(vars.ToolTypes[i[0], i[1]]);
+
+            var t = CreateTool();
+            Console.WriteLine("");
 
         }
 
-        public static void TestEqual()
+        
+
+        public static Tool CreateTool()
         {
-            Tool tool1 = new Tool("number1", 1, new[] {1, 1 }) {};
-            Tool tool2 = new Tool("number2", 1, new[] { 1, 1 }) { };
-            //Console.WriteLine(tool1.Name);
+            //TODO: add member to tool
+            Output Outputs = new Output();
+            var userToolInput = Outputs.GetNewToolInfo();
+            Tool resultTool = new Tool((string)userToolInput[0], (int)userToolInput[1], (int[])userToolInput[2]);
 
-            ToolCollection Collect = new ToolCollection() { };
-
-            Collect.add(tool1);
-            Collect.add(tool2);
-
-            Console.WriteLine(Collect.search(tool1));
-            Console.WriteLine(Collect.search(tool2));
-
-            Collect.delete(tool2);
-
-            Console.WriteLine(Collect.search(tool1));
-            Console.WriteLine(Collect.search(tool2));
-
+            return resultTool;
         }
+
+        
     }
 }

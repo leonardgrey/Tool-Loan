@@ -14,20 +14,25 @@ namespace ToolLoan.Classes
         GlobalVariables vars = new GlobalVariables();
         public ToolLibrarySystem()
         {
+            this.ToolCollections = new List<ToolCollection>();
+
+
             CreateToolCollections();
-
-
         }
 
 
 
         public void add(Tool tool)
         {
+
+            //TODO: find which category it belongs to
+            // add to that toolcollections array
             throw new NotImplementedException();
         }
 
         public void add(Tool tool, int amountOfPieces)
         {
+            
             throw new NotImplementedException();
         }
 
@@ -80,6 +85,7 @@ namespace ToolLoan.Classes
         {
             throw new NotImplementedException();
         }
+
 
         public void CreateToolCollections()
         {

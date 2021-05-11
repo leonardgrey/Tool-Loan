@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ToolLoan.Classes;
 
 namespace ToolLoan
 {
@@ -22,6 +23,7 @@ namespace ToolLoan
 
         public void add(Tool tool)
         {
+            Output outputs = new Output();
             try
             {
                 ResizeArray(this.CollectionOfTools);
@@ -65,6 +67,8 @@ namespace ToolLoan
             }
             this.CollectionOfTools = TempArray;
         }
+
+
 
     }
 }

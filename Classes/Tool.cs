@@ -11,11 +11,13 @@ namespace ToolLoan
         public int[] ToolType { get; set; }
         public string Name { get; set; }
         public int Quantity { get; set; }
-        public int AvailableQuantity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int AvailableQuantity { get; set; }
         public Member MemberBorrowing { get; set; }
 
         // how many people have borrowed it not how many are currently 
-        public int NoBorrowings { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int NoBorrowings { get; set; }
+
+        // probs wont use this
         public MemberCollection GetBorrowers => throw new NotImplementedException();
 
 
@@ -23,7 +25,10 @@ namespace ToolLoan
         {
             this.Name = name;
             this.Quantity = quantity;
-            this.ToolType = ToolType;
+            this.ToolType = toolType;
+
+            this.AvailableQuantity = 0;
+            this.NoBorrowings = 0;
         }
 
         public void addBorrower(Member member)
