@@ -9,19 +9,6 @@ namespace ToolLoan
         // 0 = guest. 1 = staff. 2 = member
         public int CurrentUser { get; set; }
 
-
-        public Dictionary<int, string> toolCategories = new Dictionary<int, string> { 
-            { 1, "Gardening" }, 
-            { 2, "Flooring" },
-            { 3, "Fencing"},
-            { 4, "Measuring"},
-            { 5, "Cleaning"},
-            { 6, "Painting"},
-            { 7, "Electronic"},
-            { 8, "Electricity"},
-            { 9, "Automotive"},
-        };
-
         public string[] ToolCategories { get; set; }
         public string[,] ToolTypes { get; set; }
 
@@ -29,7 +16,7 @@ namespace ToolLoan
         {
             CurrentUser = 0;
 
-            this.ToolCategories = new string[9] { toolCategories[1], toolCategories[2], toolCategories[3], toolCategories[4], toolCategories[5], toolCategories[6], toolCategories[7], toolCategories[8], toolCategories[9] };
+            this.ToolCategories = new string[9] { "Gardening", "Flooring", "Fencing", "Measuring", "Cleaning", "Painting", "Electronic", "Electricity", "Automotive", };
             this.ToolTypes = new string[9, 6] {
                 { "Line trimmer", "Lawn mower", "Hand tool", "Wheel barrow", "Power tool", "", },
                 { "Scraper", "Laser", "Levelling tool", "Levelling material", "Hand ", "Tiling", },
