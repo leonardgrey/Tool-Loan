@@ -7,14 +7,15 @@ namespace ToolLoan
     class GlobalVariables
     {
         // 0 = guest. 1 = staff. 2 = member
-        public int CurrentUser { get; set; }
+        public Member CurrentUser { get; set; }
+
 
         public string[] ToolCategories { get; set; }
         public string[,] ToolTypes { get; set; }
 
         public GlobalVariables()
         {
-            CurrentUser = 0;
+            CurrentUser = null;
 
             this.ToolCategories = new string[9] { "Gardening", "Flooring", "Fencing", "Measuring", "Cleaning", "Painting", "Electronic", "Electricity", "Automotive", };
             this.ToolTypes = new string[9, 6] {
@@ -29,7 +30,6 @@ namespace ToolLoan
                 { "Jacks", "Air compressors", "Battery charger", "Socket tool", "Braking", "", }
             };
         }
-
-
+        
     }
 }

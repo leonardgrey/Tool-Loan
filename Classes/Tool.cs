@@ -27,7 +27,7 @@ namespace ToolLoan
             this.Quantity = quantity;
             this.ToolType = toolType;
 
-            this.AvailableQuantity = 0;
+            this.AvailableQuantity = quantity;
             this.NoBorrowings = 0;
         }
 

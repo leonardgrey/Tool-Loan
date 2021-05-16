@@ -8,26 +8,20 @@ namespace ToolLoan.Classes
 {
     class ToolLibrarySystem : iToolLibrarySystem
     {
-
         public List<ToolCollection> ToolCollections { get; set; }
 
-        GlobalVariables vars = new GlobalVariables();
         public ToolLibrarySystem()
         {
             this.ToolCollections = new List<ToolCollection>();
-
-
             CreateToolCollections();
+            TempTools();
         }
-
-
 
         public void add(Tool tool)
         {
-
-            //TODO: find which category it belongs to
-            // add to that toolcollections array
-            throw new NotImplementedException();
+            // get the 
+            var toolCatIndex = tool.ToolType[0];
+            this.ToolCollections[toolCatIndex].add(tool);
         }
 
         public void add(Tool tool, int amountOfPieces)
@@ -43,6 +37,9 @@ namespace ToolLoan.Classes
 
         public void borrowTool(Member member, Tool tool)
         {
+            //ToolCollection t = this.ToolLibrarySystem.ToolCollections[selectedCategoryIndex];
+            //Tool resultTool = t.CollectionOfTools[chosenToolIndex];
+
             throw new NotImplementedException();
         }
 
@@ -86,7 +83,6 @@ namespace ToolLoan.Classes
             throw new NotImplementedException();
         }
 
-
         public void CreateToolCollections()
         {
             ToolCollection gardeningTools = new ToolCollection();
@@ -107,6 +103,61 @@ namespace ToolLoan.Classes
             ToolCollections.Add(electronicTools);
             ToolCollection autoMotiveTools = new ToolCollection();
             ToolCollections.Add(autoMotiveTools);
+        }
+
+        public void TempTools()
+        {
+            Tool tool1 = new Tool("Gardening lawn mower", 3, new int[] { 0, 1 })
+            {
+
+            };
+            Tool tool2 = new Tool("Gardening lawn mower", 0, new int[] { 0, 1 })
+            {
+
+            };
+            Tool tool3 = new Tool("Gardening line trimmer", 0, new int[] { 0, 0 })
+            {
+
+            };
+            Tool tool4 = new Tool("Gardening hand tool", 0, new int[] { 0, 2 })
+            {
+
+            };
+            Tool tool5 = new Tool("Gardening wheelbarrow", 0, new int[] { 0, 3 })
+            {
+
+            };
+            Tool tool6 = new Tool("Gardening hand tool", 0, new int[] { 0, 2 })
+            {
+
+            };
+            Tool tool7 = new Tool("Flooring tool levelling material", 0, new int[] { 1, 3 })
+            {
+
+            };
+            Tool tool8 = new Tool("Flooring tool levelling tool", 0, new int[] { 1, 2 })
+            {
+
+            };
+            Tool tool9 = new Tool("Flooring tool floor laser", 0, new int[] { 1, 1 })
+            {
+
+            };
+            Tool tool10 = new Tool("Flooring tool hand tool", 0, new int[] { 1, 4 })
+            {
+
+            };
+            add(tool1);
+            add(tool2);
+            add(tool3);
+            add(tool4);
+            add(tool5);
+            add(tool6);
+            add(tool7);
+            add(tool8);
+            add(tool9);
+            add(tool10);
+
         }
     }
 }

@@ -10,8 +10,6 @@ namespace ToolLoan
     class ToolCollection : iToolCollection
     {
         public Tool[] CollectionOfTools { get; set; }
-        public int CategoryIndex { get; set; }
-        public int MyProperty { get; set; }
         public int Number { get; set; }
 
         public ToolCollection()
@@ -23,7 +21,6 @@ namespace ToolLoan
 
         public void add(Tool tool)
         {
-            Output outputs = new Output();
             try
             {
                 ResizeArray(this.CollectionOfTools);
@@ -67,7 +64,6 @@ namespace ToolLoan
             }
             this.CollectionOfTools = TempArray;
         }
-
 
 
     }

@@ -7,27 +7,33 @@ namespace ToolLoan
     class Program
     {
         static void Main(string[] args)
-        {   
+        {
             ToolLibrarySystem librarySystem = new ToolLibrarySystem();
             GlobalVariables vars = new GlobalVariables();
+            Output outputs = new Output(librarySystem, vars);
 
-            var t = CreateTool();
-            Console.WriteLine("");
 
+
+
+            MainTest(outputs);
         }
 
-        
-
-        public static Tool CreateTool()
+        public static void MainTest(Output outputs)
+        {
+            //outputs.WelcomeScreen();
+            //outputs.MenuOption();
+            //outputs.ChooseMenu();
+            outputs.BrowseTools();
+   
+        }
+        public static Tool CreateTool(Output outputs)
         {
             //TODO: add member to tool
-            Output Outputs = new Output();
-            var userToolInput = Outputs.GetNewToolInfo();
+            var userToolInput = outputs.GetNewToolInfo();
             Tool resultTool = new Tool((string)userToolInput[0], (int)userToolInput[1], (int[])userToolInput[2]);
 
             return resultTool;
         }
 
-        
     }
 }
