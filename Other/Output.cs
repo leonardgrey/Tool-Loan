@@ -11,6 +11,8 @@ namespace ToolLoan.Classes
         public ToolLibrarySystem ToolLibrarySystem { get; set; }
         public GlobalVariables Vars { get; set; }
 
+        const string lineBreak = "============================================================================================";
+
         public Output(ToolLibrarySystem t, GlobalVariables v)
         {
             this.ToolLibrarySystem = t;
@@ -20,20 +22,38 @@ namespace ToolLoan.Classes
         public void WelcomeScreen() { Console.WriteLine("Welcome to the Tool Library"); }
 
         public void MenuOption(string menu = "Main menu") { Console.WriteLine($"=============={menu}=============="); }
-        public string ChooseMenu()
+        public int ChooseMenu()
         {
-            Console.WriteLine("1. Staff login \n2. Member login \n0. Exit");
-            switch (Console.ReadLine())
-            {   
-                case "1":
-                    return "Staff menu";
-                case "2":
-                    return "Member menu";
-                case "0":
-                    return "";
+            Console.WriteLine(lineBreak);
+            //TODO: fix/change this 
+            Console.WriteLine("1. Staff Login \n2. Member Login \n0. Exit\n" + lineBreak);
+            if (Console.ReadLine() == "1")
+            {
+                return 1;
+            }
+            else if (Console.ReadLine() == "2")
+            {
+                return 2;
+            }
+            else
+            {
+                return 0;
             }
 
-            return "";
+        }
+
+        public void StaffMenu()
+        {
+            Console.Clear();
+            Console.WriteLine(lineBreak);
+            Console.WriteLine( lineBreak.Substring(0, lineBreak.Length/2-5) +  "Staff menu" + lineBreak.Substring(0, lineBreak.Length / 2 - 4));
+        }
+
+        public void MemberMenu()
+        {
+            Console.Clear();
+            Console.WriteLine(lineBreak);
+            Console.WriteLine(lineBreak.Substring(0, lineBreak.Length / 2 - 10) + "Member menu" + lineBreak.Substring(0, lineBreak.Length / 2 - 10));
         }
 
 
@@ -103,7 +123,7 @@ namespace ToolLoan.Classes
             return returnResult;
         }
 
-        public void BrowseTools()
+        public int[] BrowseTools()
         {
             Tool[] categoryItems = null;
             int selectedCategoryIndex = -1;
@@ -124,30 +144,106 @@ namespace ToolLoan.Classes
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine($"Please enter a valid number between 0 & {this.Vars.ToolCategories.Length}");
-                    Console.WriteLine("\nPlease make a selection: ");
+                    Console.WriteLine($"\nPlease enter a valid number between 0 & {this.Vars.ToolCategories.Length}");
+                    //Console.WriteLine("Please make a selection: ");
                     selectedCategoryIndex = Int32.Parse(Console.ReadLine()) - 1;
-                    Console.WriteLine("\n");
                 }
             }
+            Console.WriteLine(lineBreak);
 
             // display all the tools in that list
-            String s = String.Format("{0, -37} {1, -20} {2, -30}\n\n", "Tool Name", "Available", "Quantity");
-            for (int i = 0; i < categoryItems.Length; i++)
+            
+            if (categoryItems.Length > 0)
             {
-                s += String.Format("{0, -40} {1, -20} {2, -30}\n", $"{i+1}. {categoryItems[i].Name}", categoryItems[i].AvailableQuantity, categoryItems[i].Quantity);
+                String s = String.Format("{0, -37} {1, -20} {2, -30}\n\n", "Tool Name", "Available", "Quantity");
+                for (int i = 0; i < categoryItems.Length; i++)
+                {
+                    s += String.Format("{0, -40} {1, -20} {2, -30}\n", $"{i + 1}. {categoryItems[i].Name}", categoryItems[i].AvailableQuantity, categoryItems[i].Quantity);
+                }
+                Console.WriteLine($"\n{s}");
             }
-            Console.WriteLine($"\n{s}");
+            else
+            {
+                Console.WriteLine($"There are no tools inside category {Vars.ToolCategories[selectedCategoryIndex]}");
+            }
 
-            //TODO: confirm it
 
             // get user input
             var chosenToolIndex = Int32.Parse(Console.ReadLine());
 
-            int[] resultIndex = new int[] { 0, 0 };
+            int[] resultIndex = new int[] { selectedCategoryIndex, chosenToolIndex };
+            return resultIndex;
 
-            // return a tool
         }
+
+        public bool LoginMember(ToolLibrarySystem system)
+        {
+            // print out asking for information
+            // use the search function inside member collection to return a boolean
+            // repeat until it returns a true value.
+
+            Boolean loggedIn = false;
+
+            while (!loggedIn)
+            {
+                Console.Clear();
+                Console.WriteLine("Username: ");
+                string usernameInput = Console.ReadLine();
+
+                Console.WriteLine("\nPasscode: ");
+                string passcodeInput = Console.ReadLine();
+
+                // search for member with that login
+                Member mem = new Member("Leo", "Grey", "0421158333", "1234") { };
+                if (system.MemberCollection.search(mem))
+                {
+                    Console.Clear();
+                    loggedIn = true;
+                    return true;
+                }
+
+                //TODO get whether the user is member or staff
+
+            }
+            return false;
+
+        }
+
+        public bool LoginStaff()
+        {
+            Boolean loggedIn = false;
+
+            while (!loggedIn)
+            {
+                Console.WriteLine("\n\nUsername: ");
+                string usernameInput = Console.ReadLine();
+
+                Console.WriteLine("\nPasscode: ");
+                string passcodeInput = Console.ReadLine();
+
+                if (ValidateStaff(usernameInput, passcodeInput))
+                {
+                    return true;
+                }
+
+                Console.WriteLine("Incorrect login details, please try again.");
+            }
+            return false;
+        }
+
+        public bool ValidateStaff(string username, string passcode)
+        {
+            string staffUsername = "1";
+            string staffPasscode = "1";
+
+            if (staffUsername == username && staffPasscode == passcode)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
 
     }
 }

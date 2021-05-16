@@ -21,10 +21,11 @@ namespace ToolLoan.Classes
 
         public bool search(Member member)
         {
-            throw new NotImplementedException();
+            //TODO: search for member in collection
+            return true;
         }
 
-        public iMember[] toArray()
+        public Member[] toArray()
         {
             throw new NotImplementedException();
         }

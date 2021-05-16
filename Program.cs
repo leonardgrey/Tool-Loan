@@ -13,19 +13,26 @@ namespace ToolLoan
             Output outputs = new Output(librarySystem, vars);
 
 
+            MainTest(outputs, librarySystem);
 
-
-            MainTest(outputs);
         }
 
-        public static void MainTest(Output outputs)
+        public static void MainTest(Output outputs, ToolLibrarySystem system)
         {
-            //outputs.WelcomeScreen();
-            //outputs.MenuOption();
-            //outputs.ChooseMenu();
-            outputs.BrowseTools();
-   
+            var menu = outputs.ChooseMenu();
+            if (menu == 1)
+            {
+                outputs.LoginStaff();
+                outputs.StaffMenu();
+            }
+            else if (menu == 2)
+            {
+                outputs.LoginMember(system);
+                outputs.MemberMenu();
+            }
+
         }
+
         public static Tool CreateTool(Output outputs)
         {
             //TODO: add member to tool
@@ -33,6 +40,20 @@ namespace ToolLoan
             Tool resultTool = new Tool((string)userToolInput[0], (int)userToolInput[1], (int[])userToolInput[2]);
 
             return resultTool;
+        }
+
+        public static void MemberBorrowsTool(Output outputs, ToolLibrarySystem system)
+        {
+            var toolIndex = outputs.BrowseTools();
+
+            // TODO: add member to this
+            Member mem = new Member("Leo", "Grey", "0421158333", "1234");
+
+            ToolCollection t = system.ToolCollections[toolIndex[0]];
+            Tool resultTool = t.CollectionOfTools[toolIndex[1]];
+
+            system.borrowTool(mem, resultTool);
+
         }
 
     }

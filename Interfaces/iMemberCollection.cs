@@ -20,6 +20,7 @@ namespace Assignment
 
         Boolean search(Member member); //search a given member in this member collection. Return true if this memeber is in the member collection; return false otherwise.
 
-        iMember[] toArray(); //output the memebers in this collection to an array of iMember
+        Member[] toArray(); //output the memebers in this collection to an array of iMember
     }
 }
+

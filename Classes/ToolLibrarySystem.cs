@@ -9,10 +9,13 @@ namespace ToolLoan.Classes
     class ToolLibrarySystem : iToolLibrarySystem
     {
         public List<ToolCollection> ToolCollections { get; set; }
+        public MemberCollection MemberCollection { get; set; }
 
         public ToolLibrarySystem()
         {
             this.ToolCollections = new List<ToolCollection>();
+            this.MemberCollection = new MemberCollection();
+
             CreateToolCollections();
             TempTools();
         }
@@ -30,15 +33,18 @@ namespace ToolLoan.Classes
             throw new NotImplementedException();
         }
 
-        public void add(Member tool)
+        public void add(Member member)
         {
             throw new NotImplementedException();
         }
 
         public void borrowTool(Member member, Tool tool)
         {
-            //ToolCollection t = this.ToolLibrarySystem.ToolCollections[selectedCategoryIndex];
-            //Tool resultTool = t.CollectionOfTools[chosenToolIndex];
+            // call addTool from Member
+            member.addTool(tool);
+            // call addBorrower from Tool
+            tool.addBorrower(member);
+            // 
 
             throw new NotImplementedException();
         }
@@ -83,6 +89,7 @@ namespace ToolLoan.Classes
             throw new NotImplementedException();
         }
 
+        // own functions
         public void CreateToolCollections()
         {
             ToolCollection gardeningTools = new ToolCollection();

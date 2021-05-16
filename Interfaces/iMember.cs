@@ -31,7 +31,8 @@ namespace Assignment
             set;
         }
 
-        string[] Tools //get a list of tools that this memebr is currently holding
+        // CHANGED FROM string[] TO List<Tool>
+        List<Tool> Tools //get a list of tools that this memebr is currently holding
         {
             get;
         }
