@@ -11,10 +11,10 @@ namespace ToolLoan.Classes
         public List<ToolCollection> ToolCollections { get; set; }
         public MemberCollection MemberCollection { get; set; }
 
-        public ToolLibrarySystem()
+        public ToolLibrarySystem(MemberCollection memberCollection)
         {
             this.ToolCollections = new List<ToolCollection>();
-            this.MemberCollection = new MemberCollection();
+            this.MemberCollection = memberCollection;
 
             CreateToolCollections();
             TempTools();

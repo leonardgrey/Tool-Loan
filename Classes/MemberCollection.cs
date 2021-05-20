@@ -1,17 +1,27 @@
 ﻿using Assignment;
+using BSTreeClass;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ToolLoan.Interfaces;
 
 namespace ToolLoan.Classes
 {
     class MemberCollection : iMemberCollection
     {
-        public int Number => throw new NotImplementedException();
+        public int Number { get; set; }
+
+        public BSTree MemberCollections { get; set; }
+
+        public MemberCollection()
+        {
+            this.MemberCollections = new BSTree();
+        }
 
         public void add(Member member)
         {
-            throw new NotImplementedException();
+            this.MemberCollections.Insert(member);
+            Console.WriteLine("");
         }
 
         public void delete(Member member)

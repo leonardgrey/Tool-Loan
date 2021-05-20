@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ToolLoan
 {
-    class Member : iMember
+    class Member : iMember, IComparable
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -58,6 +58,11 @@ namespace ToolLoan
         {
             //return a string containing the first name, lastname, and contact phone number of this memeber
             return "";
+        }
+
+        public int CompareTo(object obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }

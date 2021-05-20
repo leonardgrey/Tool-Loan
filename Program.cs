@@ -8,13 +8,25 @@ namespace ToolLoan
     {
         static void Main(string[] args)
         {
-            ToolLibrarySystem librarySystem = new ToolLibrarySystem();
+            MemberCollection memberCollection = new MemberCollection();
+            AddMembers(memberCollection);
+            ToolLibrarySystem librarySystem = new ToolLibrarySystem(memberCollection);
             GlobalVariables vars = new GlobalVariables();
             Output outputs = new Output(librarySystem, vars);
 
 
             MainTest(outputs, librarySystem);
 
+        }
+
+        public static void AddMembers(MemberCollection memColl)
+        {
+            Member mem = new Member("1", "1la", "111111111", "1111") { };
+            Member mem2 = new Member("2", "2la", "2222222222", "2222") { };
+            Member mem3 = new Member("3", "3la", "3333333333", "3333") { };
+            memColl.add(mem);
+            memColl.add(mem2);
+            memColl.add(mem3);
         }
 
         public static void MainTest(Output outputs, ToolLibrarySystem system)
@@ -30,16 +42,20 @@ namespace ToolLoan
                 outputs.LoginMember(system);
                 outputs.MemberMenu();
             }
-
         }
 
-        public static Tool CreateTool(Output outputs)
+        public static void CreateSingleTool(Output outputs, ToolLibrarySystem systen)
         {
             //TODO: add member to tool
             var userToolInput = outputs.GetNewToolInfo();
             Tool resultTool = new Tool((string)userToolInput[0], (int)userToolInput[1], (int[])userToolInput[2]);
 
-            return resultTool;
+            systen.add(resultTool);
+        }
+
+        public static void CreateMultipleTool(Output outputs, ToolLibrarySystem systen)
+        {
+
         }
 
         public static void MemberBorrowsTool(Output outputs, ToolLibrarySystem system)

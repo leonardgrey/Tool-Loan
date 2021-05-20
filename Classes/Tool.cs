@@ -21,7 +21,7 @@ namespace ToolLoan
         public MemberCollection GetBorrowers => throw new NotImplementedException();
 
 
-        public Tool(string name, int quantity, int[] toolType )
+        public Tool(string name, int quantity, int[] toolType)
         {
             this.Name = name;
             this.Quantity = quantity;
@@ -51,3 +51,5 @@ namespace ToolLoan
         }
     }
 }
+
+
