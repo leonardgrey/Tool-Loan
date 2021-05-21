@@ -6,19 +6,29 @@ namespace ToolLoan
 {
     class Program
     {
-        static void Main(string[] args)
-        { 
-            MemberCollection memberCollection = new MemberCollection();
+        MemberCollection memberCollection;
+        ToolLibrarySystem system;
+        ToolCategoriesTypes vars;
+        Output outputs;
+        public void Setup()
+        {
+            memberCollection = new MemberCollection();
             AddMembers(memberCollection);
-            ToolLibrarySystem librarySystem = new ToolLibrarySystem(memberCollection);
-            ToolCategoriesTypes vars = new ToolCategoriesTypes();
-            Output outputs = new Output(librarySystem, vars);
-
-
-            MainOutput(outputs, librarySystem);
+            system = new ToolLibrarySystem(memberCollection);
+            vars = new ToolCategoriesTypes();
+            outputs = new Output(system, vars);
         }
 
-        public static void MainOutput(Output outputs, ToolLibrarySystem system)
+        static void Main(string[] args)
+        {
+            Program pg = new Program();
+            pg.Setup();
+
+            
+            pg.MainOutput();
+        }
+
+        public void MainOutput()
         {
             // show welcome screen
             // ask for login - if user presses 0 at any time it goes back to this menu
@@ -38,7 +48,7 @@ namespace ToolLoan
             if (userLoginType == 1) 
             { 
                 Console.Clear(); 
-                outputs.LoginStaff();
+                this.outputs.LoginStaff();
                 var selectedOption = outputs.StaffMenu();
 
                 int[] toolSelect = null;
@@ -47,11 +57,11 @@ namespace ToolLoan
                 {
                     case 1: // add a new tool
                         Tool tool = outputs.GetNewToolInfo(); 
-                        system.add(tool); 
+                        this.system.add(tool); 
                         break;
                     case 2: // add a quantity of pieces for a tool
-                        toolSelect = GetToolSelectedIndex(outputs, system);
-                        system.add(system.ToolCollections[toolSelect[0]].toArray()[0], outputs.GetNewToolInforMultiple());
+                        toolSelect = GetToolSelectedIndex(outputs, this.system);
+                        this.system.add(this.system.ToolCollections[toolSelect[0]].toArray()[0], outputs.GetNewToolInforMultiple());
                         break;
                     case 3: // remove pieces of tool
                         toolSelect = GetToolSelectedIndex(outputs, system);
@@ -68,13 +78,13 @@ namespace ToolLoan
                         outputs.GetPhoneNumber(system);
                         break;
                     case 0:
-                        MainOutput(outputs, system);
+                        this.MainOutput();
                         break;
                     default:
                         Console.WriteLine("Invalid option");
                         break;
                 }
-                MainOutput(outputs, system);
+                this.MainOutput();
             }
             // MEMBER
             else if (userLoginType == 2) 
@@ -82,30 +92,35 @@ namespace ToolLoan
                 Console.Clear(); 
                 outputs.LoginMember(system);
                 var selectedOption = outputs.MemberMenu();
+
+                int[] toolSelect = null;
+
                 switch (selectedOption)
                 {
                     case 1: // display tools
                         system.displayTools(outputs.GetToolCategory()); 
                         break;
                     case 2: // borrow tool
-                        system.displayTools(outputs.GetToolCategory());
-                        // display all the tools shown
-                        // get selected index
-                        Tool tool = null;
-                        system.borrowTool(system.CurrentUser, tool);
+                        toolSelect = GetToolSelectedIndex(outputs, system);
+                        system.displayTools(toolSelect);
+                        system.borrowTool(system.CurrentUser, system.ToolCollections[toolSelect[0]].toArray()[toolSelect[1]]);
 
                         break;
                     case 3: // return tool 
                         Console.WriteLine("3"); break;
                     case 4: // list all tools im renting
-                        Console.WriteLine("4"); break;
+                        system.listTools(system.CurrentUser);
+                        MainOutput();
+                        break;
                     case 5: // display top three most freq rented tools 
                         Console.WriteLine("5"); break;
-                    case 0: MainOutput(outputs, system); break;
+                    case 0: MainOutput(); break;
 
                     default:
                         break;
                 }
+
+                MainOutput();
             }
             else if (userLoginType == 0) { Environment.Exit(0); }
         }
@@ -121,7 +136,7 @@ namespace ToolLoan
 
         public static void AddMembers(MemberCollection memColl)
         {
-            Member mem1 = new Member("Leo", "Grey", "0421158333", "1234") { };
+            Member mem1 = new Member("1", "", "0421158333", "1") { };
             memColl.add(mem1);
 
             Member mem = new Member("Pratham", "chaudhry", "111111111", "1111") { };

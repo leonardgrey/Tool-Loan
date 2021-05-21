@@ -73,7 +73,6 @@ namespace ToolLoan.Classes
             tool.addBorrower(member);
             // 
 
-            throw new NotImplementedException();
         }
 
         public void delete(Tool tool)
@@ -115,7 +114,6 @@ namespace ToolLoan.Classes
             {
                 Console.WriteLine($"There are no tools inside category {Vars.ToolCategories[toolType[0]]}");
             }
-
         }
 
         public void displayTopThree()
@@ -123,9 +121,15 @@ namespace ToolLoan.Classes
             throw new NotImplementedException();
         }
 
-        public string[] listTools(Member member)
+        public void listTools(Member member)
         {
-            throw new NotImplementedException();
+            var t = member.Tools;
+
+            foreach (var item in t)
+            {
+                Console.WriteLine(item);
+            }
+
         }
 
         public void returnTool(Member member, Tool tool)
