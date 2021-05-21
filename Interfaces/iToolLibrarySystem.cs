@@ -21,9 +21,9 @@ namespace Interfaces
 
         void delete(Member tool); //delete a member from the system
 
-        void display(string toolType); //given the contact phone number of a member, display all the tools that the member are currently renting
+        void display(string contactNumber); //given the contact phone number of a member, display all the tools that the member are currently renting
 
-        void displayTools(string toolType); // display all the tools of a tool type selected by a member
+        void displayTools(int[] toolType); // display all the tools of a tool type selected by a member
 
         void borrowTool(Member member, Tool tool); //a member borrows a tool from the tool library
 

@@ -4,6 +4,9 @@
 // 24/3/06
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using ToolLoan;
 using static ToolLoan.Interfaces.BSTreeInterface;
 
 namespace BSTreeClass
@@ -62,6 +65,8 @@ namespace BSTreeClass
 
 		private bool Search(IComparable item, BTreeNode r)
 		{
+			// change so its username and passcode and not the whole member 
+
 			if (r != null)
 			{
 				if (item.CompareTo(r.Item) == 0)
@@ -88,6 +93,7 @@ namespace BSTreeClass
 		// post: item is inserted to the binary search tree rooted at ptr
 		private void Insert(IComparable item, BTreeNode ptr)
 		{
+
 			if (item.CompareTo(ptr.Item) < 0)
 			{
 				if (ptr.LChild == null)
@@ -170,28 +176,33 @@ namespace BSTreeClass
 			}
 		}
 
-		public void PreOrderTraverse()
+		public IEnumerable<IComparable> PreOrderTraverse()
 		{
-			Console.Write("PreOrder: ");
-			PreOrderTraverse(root);
-			Console.WriteLine();
+			List<IComparable> mem = new List<IComparable>();
+			return PreOrderTraverse(root);
 		}
 
-		private void PreOrderTraverse(BTreeNode root)
+		private IEnumerable<IComparable> PreOrderTraverse(BTreeNode root)
 		{
 			if (root != null)
 			{
-				Console.Write(root.Item);
-				PreOrderTraverse(root.LChild);
-				PreOrderTraverse(root.RChild);
+				yield return root.Item;
+
+				foreach (var item in PreOrderTraverse(root.LChild))
+				{
+					yield return item;
+				}
+
+				foreach (var item in PreOrderTraverse(root.RChild))
+				{
+					yield return item;
+				}
 			}
 		}
 
 		public void InOrderTraverse()
 		{
-			Console.Write("InOrder: ");
 			InOrderTraverse(root);
-			Console.WriteLine();
 		}
 
 		private void InOrderTraverse(BTreeNode root)
@@ -206,7 +217,6 @@ namespace BSTreeClass
 
 		public void PostOrderTraverse()
 		{
-			Console.Write("PostOrder: ");
 			PostOrderTraverse(root);
 			Console.WriteLine();
 		}

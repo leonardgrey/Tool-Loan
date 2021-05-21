@@ -4,18 +4,15 @@ using System.Text;
 
 namespace ToolLoan
 {
-    class GlobalVariables
+    class ToolCategoriesTypes
     {
         // 0 = guest. 1 = staff. 2 = member
-        public Member CurrentUser { get; set; }
-
 
         public string[] ToolCategories { get; set; }
         public string[,] ToolTypes { get; set; }
 
-        public GlobalVariables()
+        public ToolCategoriesTypes()
         {
-            CurrentUser = null;
 
             this.ToolCategories = new string[9] { "Gardening", "Flooring", "Fencing", "Measuring", "Cleaning", "Painting", "Electronic", "Electricity", "Automotive", };
             this.ToolTypes = new string[9, 6] {

@@ -1,6 +1,7 @@
 ﻿using Assignment;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace ToolLoan
@@ -11,11 +12,19 @@ namespace ToolLoan
         public string LastName { get; set; }
         public string ContactNumber { get; set; }
         public string PIN { get; set; }
-        
+        public string Username {
+            get 
+            {
+                return $"{this.LastName.ToUpper()}{this.FirstName.ToUpper()}";
+            }
+            set { } 
+        }
+
         // CHANGE FROM string[] TO List<Tool>
         public List<Tool> Tools { get; set; }
-        public int NumOfTools { get; set; }
-        // public int NumOfTools { get => this.Tools.Count; set => NumOfTools = value; }
+        private Tool[] PastTools { get; set; }
+
+        public int NumOfTools { get { return this.Tools.Count; } set { } }
 
         public Member(string fName, string lName, string number, string pin)
         {
@@ -25,7 +34,6 @@ namespace ToolLoan
             this.PIN = pin;
 
             NumOfTools = 0;
-
             this.Tools = new List<Tool>();
         }
 
@@ -57,12 +65,14 @@ namespace ToolLoan
         public override string ToString() 
         {
             //return a string containing the first name, lastname, and contact phone number of this memeber
-            return "";
+            return $"{this.FirstName} {this.LastName}, {this.ContactNumber}";
         }
 
         public int CompareTo(object obj)
         {
-            throw new NotImplementedException();
+            Member t = (Member)obj;
+            return Username.CompareTo(t.Username);
         }
+
     }
 }

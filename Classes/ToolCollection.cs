@@ -55,6 +55,7 @@ namespace ToolLoan
             return this.CollectionOfTools;
         }
 
+
         public void ResizeArray(Tool[] arrayToResize)
         {
             Tool[] TempArray = new Tool[arrayToResize.Length+1];
@@ -64,7 +65,6 @@ namespace ToolLoan
             }
             this.CollectionOfTools = TempArray;
         }
-
 
     }
 }

@@ -9,11 +9,11 @@ namespace ToolLoan.Classes
     class Output
     {
         public ToolLibrarySystem ToolLibrarySystem { get; set; }
-        public GlobalVariables Vars { get; set; }
+        public ToolCategoriesTypes Vars { get; set; }
 
-        const string lineBreak = "============================================================================================";
+        const string lineBreak = "=====================================================";
 
-        public Output(ToolLibrarySystem t, GlobalVariables v)
+        public Output(ToolLibrarySystem t, ToolCategoriesTypes v)
         {
             this.ToolLibrarySystem = t;
             this.Vars = v;
@@ -22,16 +22,17 @@ namespace ToolLoan.Classes
         public void WelcomeScreen() { Console.WriteLine("Welcome to the Tool Library"); }
 
         public void MenuOption(string menu = "Main menu") { Console.WriteLine($"=============={menu}=============="); }
-        public int ChooseMenu()
+        public int LoggedOut()
         {
             Console.WriteLine(lineBreak);
             //TODO: fix/change this 
             Console.WriteLine("1. Staff Login \n2. Member Login \n0. Exit\n" + lineBreak);
-            if (Console.ReadLine() == "1")
+            var t = Console.ReadLine();
+            if (t == "1")
             {
                 return 1;
             }
-            else if (Console.ReadLine() == "2")
+            else if (t == "2")
             {
                 return 2;
             }
@@ -39,26 +40,60 @@ namespace ToolLoan.Classes
             {
                 return 0;
             }
-
         }
 
-        public void StaffMenu()
+        public int StaffMenu()
         {
+            List<string> options = new List<string>() { 
+                "Add a new tool", 
+                "Add new pieces of an existing tool", 
+                "Remove some pieces of a tool", 
+                "Register a new member", 
+                "Remove a member", 
+                "Find the contact number of a member" 
+            };
+
             Console.Clear();
-            Console.WriteLine(lineBreak);
-            Console.WriteLine( lineBreak.Substring(0, lineBreak.Length/2-5) +  "Staff menu" + lineBreak.Substring(0, lineBreak.Length / 2 - 4));
+            Console.WriteLine(lineBreak.Substring(0, lineBreak.Length/2-5) +  "Staff menu" + lineBreak.Substring(0, lineBreak.Length / 2 - 4));
+
+            // print all the options available and return the user input
+            for (int i = 0; i < options.Count; i++)
+            {
+                Console.WriteLine($"{i+1}. {options[i]}");
+            }
+            Console.WriteLine("0. Return to main menu");
+
+            Console.WriteLine(lineBreak + "\nPlease select an option\n");
+
+            return Int32.Parse(Console.ReadLine());
         }
 
-        public void MemberMenu()
+        public int MemberMenu()
         {
+            List<string> options = new List<string>() {
+                "Display all the tools of a tool type",
+                "Borrow a tool",
+                "Return a tool",
+                "List all the tools that I am renting",
+                "Display top 3 most frequentely rented tools"
+            };
+
             Console.Clear();
-            Console.WriteLine(lineBreak);
-            Console.WriteLine(lineBreak.Substring(0, lineBreak.Length / 2 - 10) + "Member menu" + lineBreak.Substring(0, lineBreak.Length / 2 - 10));
+            Console.WriteLine(lineBreak.Substring(0, lineBreak.Length / 2 - 4) + "Member menu" + lineBreak.Substring(0, lineBreak.Length / 2 - 6));
+
+            for (int i = 0; i < options.Count; i++)
+            {
+                Console.WriteLine($"{i+1}. {options[i]}");
+            }
+            Console.WriteLine("0. Return to main menu");
+
+            Console.WriteLine(lineBreak + "\nPlease select an option\n");
+
+            return Int32.Parse(Console.ReadLine());
         }
 
 
-        // return the index of the select category and tool type
-        // for selecting a tool type for later use
+        // TOOL PART OF CONSOLE
         public int[] SelectToolType()
         {
             Console.WriteLine("\n\nPlease select the tool category\n");
@@ -93,7 +128,7 @@ namespace ToolLoan.Classes
             return ReturnValue;
         }
 
-        public Object[] GetNewToolInfo()
+        public Tool GetNewToolInfo()
         {
             // print the output for adding a tool and get the input of the user
             // name, quantity, tool type
@@ -120,16 +155,17 @@ namespace ToolLoan.Classes
             int[] toolType = SelectToolType();
 
             Object[] returnResult = new object[] { name, quantity, toolType };
-            return returnResult;
+            Tool resultTool = new Tool((string)returnResult[0], (int)returnResult[1], (int[])returnResult[2]);
+            return resultTool;
         }
 
-        public int[] BrowseTools()
+        public int[] GetToolCategory()
         {
             Tool[] categoryItems = null;
             int selectedCategoryIndex = -1;
-
+            Console.Clear();
             // user chooses category
-            Console.WriteLine("\n\nPlease select the tool category\n");
+            Console.WriteLine("\nPlease select the tool category\n");
             for (int i = 1; i < this.Vars.ToolCategories.Length + 1; i++)
             {
                 Console.WriteLine($"{i}. {this.Vars.ToolCategories[i - 1]}");
@@ -150,43 +186,94 @@ namespace ToolLoan.Classes
                 }
             }
             Console.WriteLine(lineBreak);
-
-            // display all the tools in that list
-            
-            if (categoryItems.Length > 0)
-            {
-                String s = String.Format("{0, -37} {1, -20} {2, -30}\n\n", "Tool Name", "Available", "Quantity");
-                for (int i = 0; i < categoryItems.Length; i++)
-                {
-                    s += String.Format("{0, -40} {1, -20} {2, -30}\n", $"{i + 1}. {categoryItems[i].Name}", categoryItems[i].AvailableQuantity, categoryItems[i].Quantity);
-                }
-                Console.WriteLine($"\n{s}");
-            }
-            else
-            {
-                Console.WriteLine($"There are no tools inside category {Vars.ToolCategories[selectedCategoryIndex]}");
-            }
-
-
-            // get user input
-            var chosenToolIndex = Int32.Parse(Console.ReadLine());
-
-            int[] resultIndex = new int[] { selectedCategoryIndex, chosenToolIndex };
-            return resultIndex;
-
+            return new int[] { selectedCategoryIndex, 0 };
         }
 
+        public int[] SelectTool(ToolLibrarySystem system, int[] category)
+        {
+            Console.WriteLine("Please select a tool");
+            // get user input
+            var chosenToolIndex = Int32.Parse(Console.ReadLine()) - 1;
+            
+            int[] resultIndex = new int[] { category[0], chosenToolIndex };
+            return resultIndex;
+        }
+        
+        public int GetNewToolInforMultiple()
+        {
+            int quantity = -1;
+            while (quantity < 0)
+            {
+                Console.WriteLine("Quantity of tools");
+                quantity = Int32.Parse(Console.ReadLine());
+            }
+
+            return quantity;
+        }
+
+        public Member CreateNewMember()
+        {
+            // ask for name, last, number, pin
+            Console.WriteLine("Please enter members first name");
+            var fName = Console.ReadLine();
+            Console.WriteLine("Please enter members last name");
+            var lName = Console.ReadLine();
+            Console.WriteLine("Please enter members number");
+            var number = Console.ReadLine();
+            Console.WriteLine("Please enter members PIN");
+            var pin = Console.ReadLine();
+
+            Member resultMem = new Member(fName, lName, number, pin) { };
+
+            return resultMem;
+        }
+
+        public Member DeleteMember(ToolLibrarySystem system)
+        {
+            Console.Clear();
+            Console.WriteLine("Heres a list of all members");
+            Console.WriteLine(lineBreak);
+            String s = String.Format("{0, -40} {1, -20}\n\n", "Name", "Username");
+
+            foreach (var item in system.MemberCollection.toArray())
+            {
+                s += String.Format("{0, -40} {1, -20}\n", $"{item.FirstName} {item.LastName}", item.Username);
+            }
+            Console.WriteLine($"{s}");
+            Console.WriteLine(lineBreak);
+
+            Console.WriteLine("Enter username of member to delete");
+            var usernameInput = Console.ReadLine();
+
+            Member mem = system.MemberCollection.FindMember(usernameInput, true);
+
+            return mem;
+        }
+
+        public void GetPhoneNumber(ToolLibrarySystem system)
+        { 
+            Console.Clear();
+            Console.WriteLine("Heres a list of all members");
+            Console.WriteLine(lineBreak);
+            String s = String.Format("{0, -40} {1, -20}\n\n", "Name", "Number");
+
+            foreach (var item in system.MemberCollection.toArray())
+            {
+                s += String.Format("{0, -40} {1, -20}\n", $"{item.FirstName} {item.LastName}", item.ContactNumber);
+            }
+            Console.WriteLine($"{s}");
+            Console.WriteLine(lineBreak);
+        }
+
+        // // // //
+
+        // LOGIN PART OF CONSOLE //
         public bool LoginMember(ToolLibrarySystem system)
         {
-            // print out asking for information
-            // use the search function inside member collection to return a boolean
-            // repeat until it returns a true value.
-
             Boolean loggedIn = false;
 
             while (!loggedIn)
             {
-                Console.Clear();
                 Console.WriteLine("Username: ");
                 string usernameInput = Console.ReadLine();
 
@@ -194,19 +281,18 @@ namespace ToolLoan.Classes
                 string passcodeInput = Console.ReadLine();
 
                 // search for member with that login
-                Member mem = new Member("Leo", "Grey", "0421158333", "1234") { };
+                Member mem = system.MemberCollection.FindMember(usernameInput, passcode:passcodeInput) ;
+                system.CurrentUser = mem;
                 if (system.MemberCollection.search(mem))
                 {
                     Console.Clear();
-                    loggedIn = true;
                     return true;
                 }
-
-                //TODO get whether the user is member or staff
-
+                Console.WriteLine("Incorrect login details");
+                Console.WriteLine(lineBreak + "\n");
+                // TODO: validate the member 
             }
             return false;
-
         }
 
         public bool LoginStaff()
@@ -215,7 +301,7 @@ namespace ToolLoan.Classes
 
             while (!loggedIn)
             {
-                Console.WriteLine("\n\nUsername: ");
+                Console.WriteLine("Username: ");
                 string usernameInput = Console.ReadLine();
 
                 Console.WriteLine("\nPasscode: ");
@@ -243,7 +329,7 @@ namespace ToolLoan.Classes
 
             return false;
         }
-
+        // // // // 
 
     }
 }

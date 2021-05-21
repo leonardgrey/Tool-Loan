@@ -31,7 +31,7 @@ namespace ToolLoan.Interfaces
 
 			// pre: true
 			// post: all the nodes in the binary tree are visited once and only once in pre-order
-			void PreOrderTraverse();
+			IEnumerable<IComparable> PreOrderTraverse();
 
 			// pre: true
 			// post: all the nodes in the binary tree are visited once and only once in in-order
