@@ -29,13 +29,15 @@ namespace ToolLoan
             }
             catch (Exception)
             { 
-                throw;
+
             }
         }
       
         public void delete(Tool tool)
         {
             this.CollectionOfTools = this.CollectionOfTools.Where(val => val != tool).ToArray();
+            Console.WriteLine("Tool has been deleted");
+            Console.ReadLine();
         }
 
         public bool search(Tool tool)

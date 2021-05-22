@@ -67,7 +67,7 @@ namespace ToolLoan
 
         public void deleteTool(Tool tool)
         {
-            throw new NotImplementedException();
+            this.Tools.Remove(tool);
         }
 
         public string TpString()

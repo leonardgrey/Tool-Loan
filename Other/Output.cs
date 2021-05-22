@@ -214,7 +214,18 @@ namespace ToolLoan.Classes
         {
             Console.WriteLine("Please select a tool");
             // get user input
-            var chosenToolIndex = Int32.Parse(Console.ReadLine()) - 1;
+            int chosenToolIndex = -1;
+            while (chosenToolIndex == -1)
+            {
+                try
+                {
+                    chosenToolIndex = Int32.Parse(Console.ReadLine()) - 1;
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Invalid input");
+                }
+            }
             
             int[] resultIndex = new int[] { category[0], chosenToolIndex };
             return resultIndex;
@@ -319,7 +330,8 @@ namespace ToolLoan.Classes
                 system.CurrentUser = mem;
                 if (system.MemberCollection.search(mem))
                 {
-                    Console.Clear();
+                    Console.WriteLine("Logged in. Press enter...");
+                    Console.ReadLine();
                     return true;
                 }
                 Console.WriteLine("Incorrect login details");
@@ -348,6 +360,8 @@ namespace ToolLoan.Classes
 
                 if (ValidateStaff(usernameInput, passcodeInput))
                 {
+                    Console.WriteLine("Logged in. Press enter...");
+                    Console.ReadLine();
                     return true;
                 }
 

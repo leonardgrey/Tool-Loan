@@ -21,7 +21,7 @@ namespace ToolLoan.Classes
             this.CurrentUser = null;
 
             CreateToolCollections();
-            // TempTools();
+            TempTools();
         }
 
         public void add(Tool tool)
@@ -70,16 +70,24 @@ namespace ToolLoan.Classes
 
         public void borrowTool(Member member, Tool tool)
         {
-            // call addTool from Member
-            member.addTool(tool);
-            // call addBorrower from Tool
-            tool.addBorrower(member);
+            try
+            {
+                // call addTool from Member
+                member.addTool(tool);
+                // call addBorrower from Tool
+                tool.addBorrower(member);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Press enter...");
+                Console.ReadLine();
+            }
 
         }
 
         public void delete(Tool tool)
         {
-            throw new NotImplementedException();
+            this.ToolCollections[tool.ToolType[0]].delete(tool);
         }
 
         public void delete(Tool tool, int amountOfPieces)
@@ -163,6 +171,8 @@ namespace ToolLoan.Classes
         {
             var t = member.Tools;
 
+            Console.Clear();
+            Console.WriteLine("Currently borrowing these tools");
             Console.WriteLine(lineBreak);
             for (int i = 0; i < t.Count; i++)
             {
@@ -178,7 +188,8 @@ namespace ToolLoan.Classes
 
         public void returnTool(Member member, Tool tool)
         {
-            member.Tools.Remove(tool);
+            tool.AvailableQuantity++;
+            member.deleteTool(tool);
         }
 
         // own functions

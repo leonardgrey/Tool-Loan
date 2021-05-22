@@ -55,11 +55,18 @@ namespace ToolLoan
                                 this.system.add(tool);
                                 break;
                             case 2: // add a quantity of pieces for a tool
-                                toolSelect = GetToolSelectedIndex(outputs, this.system);
-                                this.system.add(this.system.ToolCollections[toolSelect[0]].toArray()[0], outputs.GetNewToolInforMultiple());
+                                toolSelect = GetToolSelectedIndex();
+                                if (toolSelect != null)
+                                {
+                                    this.system.add(this.system.ToolCollections[toolSelect[0]].toArray()[0], outputs.GetNewToolInforMultiple());
+                                }
+                                else
+                                {
+                                    Console.ReadLine();
+                                }
                                 break;
                             case 3: // remove pieces of tool
-                                toolSelect = GetToolSelectedIndex(outputs, system);
+                                toolSelect = GetToolSelectedIndex();
                                 system.delete(system.ToolCollections[toolSelect[0]].toArray()[0]);
                                 break;
                             case 4: // register new member
@@ -100,15 +107,18 @@ namespace ToolLoan
                                 Console.ReadLine();
                                 break;
                             case 2: // borrow tool
-                                toolSelect = GetToolSelectedIndex(outputs, system);
+                                toolSelect = GetToolSelectedIndex();
+                                Tool t = null;
                                 try
                                 {
-                                    system.borrowTool(system.CurrentUser, system.ToolCollections[toolSelect[0]].toArray()[toolSelect[1]]);
+                                    t = system.ToolCollections[toolSelect[0]].toArray()[toolSelect[1]];
                                 }
                                 catch (Exception)
                                 {
-                                    Console.WriteLine("Input number too big");
+
                                 }
+                                system.borrowTool(system.CurrentUser, t);
+
                                 break;
                             case 3: // return tool 
                                 // show tools rented then get index 
@@ -150,11 +160,20 @@ namespace ToolLoan
             else if (userLoginType == 0) { Environment.Exit(0); }
         }
 
-        public static int[] GetToolSelectedIndex(Output outputs, ToolLibrarySystem system)
+        public int[] GetToolSelectedIndex()
         {
-            var toolCat = outputs.GetToolCategory();
+            var toolCat = this.outputs.GetToolCategory();
+            var categoryItems = system.ToolCollections[toolCat[0]].toArray();
+
             system.displayTools(toolCat);
-            return outputs.SelectTool(system, toolCat);
+            if (categoryItems.Length > 0)
+            {
+                return outputs.SelectTool(system, toolCat);
+            }
+            else
+            {
+                return null;
+            }
         }
 
 
