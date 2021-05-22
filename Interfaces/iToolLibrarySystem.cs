@@ -29,7 +29,7 @@ namespace Interfaces
 
         void returnTool(Member member, Tool tool); //a member return a tool to the tool library
 
-        void listTools(Member member); //get a list of tools that are currently held by a given member
+        void listRentedTools(Member member); //get a list of tools that are currently held by a given member
 
         void displayTopThree(); //Display top three most frequently borrowed tools by the members in the descending order by the number of times each tool has been borrowed.
 

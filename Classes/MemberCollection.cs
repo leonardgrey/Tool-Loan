@@ -11,7 +11,6 @@ namespace ToolLoan.Classes
     class MemberCollection : iMemberCollection
     {
         public int Number { get; set; }
-
         private BSTree MemberCollections { get; set; }
 
         public MemberCollection()
@@ -41,8 +40,9 @@ namespace ToolLoan.Classes
             return false;
         }
 
-        public Member FindMember(string username, bool staff=false, string passcode="")
+        public Member FindMember(string username="", bool staff=false, string passcode="", string number="")
         {
+
             foreach (var item in toArray())
             {
                 if (item.Username == username.ToUpper())
@@ -58,6 +58,10 @@ namespace ToolLoan.Classes
                             return item;
                         }
                     }
+                }
+                if (item.ContactNumber == number)
+                {
+                    return item;
                 }
             }
 

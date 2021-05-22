@@ -22,7 +22,6 @@ namespace ToolLoan
 
         // CHANGE FROM string[] TO List<Tool>
         public List<Tool> Tools { get; set; }
-        private Tool[] PastTools { get; set; }
 
         public int NumOfTools { get { return this.Tools.Count; } set { } }
 
@@ -43,11 +42,25 @@ namespace ToolLoan
 
             // check if the number of tool the person has is less than 3
             // add the tool into the Tools array
-
-            //TODO add console outputs 
-            if (this.Tools.Count < 3)
+            if (this.NumOfTools < 3)
             {
-                this.Tools.Add(tool);
+                if (tool.AvailableQuantity > 0)
+                {
+                    this.Tools.Add(tool);
+
+                    tool.AvailableQuantity--;
+                    tool.NoBorrowings++;
+                }
+                else
+                {
+                    Console.WriteLine("Tool is out of stock");
+                    Console.ReadLine();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Cannot borrow more than 3 tools");
+                Console.ReadLine();
             }
 
         }

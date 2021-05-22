@@ -9,7 +9,7 @@ namespace ToolLoan
 {
     class ToolCollection : iToolCollection
     {
-        public Tool[] CollectionOfTools { get; set; }
+        private Tool[] CollectionOfTools { get; set; }
         public int Number { get; set; }
 
         public ToolCollection()
@@ -55,8 +55,20 @@ namespace ToolLoan
             return this.CollectionOfTools;
         }
 
+        public Tool FindTool(Tool tool)
+        {
+            foreach (var item in toArray())
+            {
+                if (item.Name == tool.Name)
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
 
-        public void ResizeArray(Tool[] arrayToResize)
+
+        private void ResizeArray(Tool[] arrayToResize)
         {
             Tool[] TempArray = new Tool[arrayToResize.Length+1];
             for (int i = 0; i < arrayToResize.Length; i++)
