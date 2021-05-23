@@ -50,7 +50,8 @@ namespace ToolLoan.Classes
                 "Remove some pieces of a tool", 
                 "Register a new member", 
                 "Remove a member", 
-                "Display tools from members number" 
+                "Display tools from members number",
+                "Remove tool from library"
             };
 
             Console.Clear();
@@ -219,7 +220,11 @@ namespace ToolLoan.Classes
             {
                 try
                 {
-                    chosenToolIndex = Int32.Parse(Console.ReadLine()) - 1;
+                    chosenToolIndex = Int32.Parse(Console.ReadLine());
+                    if (chosenToolIndex == 0)
+                    {
+                        return null;
+                    }
                 }
                 catch (Exception)
                 {
@@ -227,7 +232,7 @@ namespace ToolLoan.Classes
                 }
             }
             
-            int[] resultIndex = new int[] { category[0], chosenToolIndex };
+            int[] resultIndex = new int[] { category[0], chosenToolIndex -1 };
             return resultIndex;
         }
         
@@ -241,6 +246,25 @@ namespace ToolLoan.Classes
             }
 
             return quantity;
+        }
+
+        public int AmountToDelete()
+        {
+            var amount = -1;
+
+            while (amount == -1)
+            {
+                try
+                {
+                    Console.WriteLine("Enter amount ");
+                    amount = Int32.Parse(Console.ReadLine());
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Invalid number");
+                }
+            }
+            return amount;
         }
 
         public int GetRentedToolSelection()

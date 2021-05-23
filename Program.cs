@@ -27,7 +27,6 @@ namespace ToolLoan
 
             //pg.outputs.SelectToolType();
 
-            
             pg.MainOutput();
 
         }
@@ -60,14 +59,16 @@ namespace ToolLoan
                                 {
                                     this.system.add(this.system.ToolCollections[toolSelect[0]].toArray()[0], outputs.GetNewToolInforMultiple());
                                 }
-                                else
-                                {
-                                    Console.ReadLine();
-                                }
+                                else { Console.ReadLine();}
+                                break;
+                            case 7: // remove tool
+                                toolSelect = GetToolSelectedIndex();
+                                system.delete(system.ToolCollections[toolSelect[0]].toArray()[0]);
                                 break;
                             case 3: // remove pieces of tool
                                 toolSelect = GetToolSelectedIndex();
-                                system.delete(system.ToolCollections[toolSelect[0]].toArray()[0]);
+                                var amount = outputs.AmountToDelete();
+                                system.delete(system.ToolCollections[toolSelect[0]].toArray()[0], amount);
                                 break;
                             case 4: // register new member
                                 Console.Clear();
@@ -108,6 +109,10 @@ namespace ToolLoan
                                 break;
                             case 2: // borrow tool
                                 toolSelect = GetToolSelectedIndex();
+                                if (toolSelect == null)
+                                {
+                                    break;
+                                }
                                 Tool t = null;
                                 try
                                 {
@@ -142,7 +147,8 @@ namespace ToolLoan
                                 // get the tool selected
                                 break;
                             case 5: // display top three most freq rented tools 
-                                Console.WriteLine("5"); break;
+                                system.displayTopThree();
+                                break;
                             case 0: Console.Clear(); MainOutput(); break;
 
                             default:
@@ -175,7 +181,6 @@ namespace ToolLoan
                 return null;
             }
         }
-
 
         public static void AddMembers(MemberCollection memColl)
         {

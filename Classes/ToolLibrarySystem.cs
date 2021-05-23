@@ -92,7 +92,16 @@ namespace ToolLoan.Classes
 
         public void delete(Tool tool, int amountOfPieces)
         {
-            throw new NotImplementedException();
+            if (tool.Quantity - amountOfPieces >= 0)
+            {
+                tool.Quantity -= amountOfPieces;
+                tool.AvailableQuantity -= amountOfPieces;
+            }
+            else
+            {
+                Console.WriteLine("Cant remove that many pieces");
+                Console.Read();
+            }
         }
 
         public void delete(Member member)
@@ -164,7 +173,15 @@ namespace ToolLoan.Classes
 
         public void displayTopThree()
         {
-            throw new NotImplementedException();
+            // sorts but its swapped
+            List<Tool[]> t = new List<Tool[]>();
+            foreach (var item in this.ToolCollections)
+            {
+                t.Add(heapSort(item.toArray(), item.toArray().Length));
+            }
+
+            Console.ReadLine();
+
         }
 
         public void listRentedTools(Member member)
@@ -215,37 +232,75 @@ namespace ToolLoan.Classes
             ToolCollections.Add(autoMotiveTools);
         }
 
-        public void TempTools()
+        /// <summary>
+        /// Credit to Ankith Reddy
+        /// Found on https://www.tutorialspoint.com/heap-sort-in-chash
+        /// </summary>
+        /// <param name="HeapSort"></param>
+        /// <param name="count"></param
+        private Tool[] heapSort(Tool[] tools, int count)
+        {
+            for (int i = count / 2 - 1; i >= 0; i--)
+                heapify(tools, count, i);
+            for (int i = count - 1; i >= 0; i--)
+            {
+                Tool temp = tools[0];
+                tools[0] = tools[i];
+                tools[i] = temp;
+                tools = heapify(tools, i, 0);
+            }
+            return tools;
+        }
+        private Tool[] heapify(Tool[] tools, int n, int i)
+        {
+            int largest = i;
+            int left = 2 * i + 1;
+            int right = 2 * i + 2;
+            if (left < n && tools[left].NoBorrowings > tools[largest].NoBorrowings)
+                largest = left;
+            if (right < n && tools[right].NoBorrowings > tools[largest].NoBorrowings)
+                largest = right;
+            if (largest != i)
+            {
+                Tool swap = tools[i];
+                tools[i] = tools[largest];
+                tools[largest] = swap;
+                heapify(tools, n, largest);
+            }
+            return tools;
+        }
+
+        private void TempTools()
         {
             Tool tool1 = new Tool("tool", 3, new int[] { 0, 0 })
             {
 
             };
-            Tool tool3 = new Tool("Gardening line trimmer", 0, new int[] { 0, 0 })
+            Tool tool3 = new Tool("Gardening line trimmer", 2, new int[] { 0, 0 })
             {
 
             };
-            Tool tool4 = new Tool("Gardening hand tool", 0, new int[] { 2, 2 })
+            Tool tool4 = new Tool("Gardening hand tool", 3, new int[] { 2, 2 })
             {
 
             };
-            Tool tool5 = new Tool("Gardening wheelbarrow", 0, new int[] { 0, 3 })
+            Tool tool5 = new Tool("Gardening wheelbarrow", 5, new int[] { 0, 3 })
             {
 
             };
-            Tool tool7 = new Tool("Flooring tool levelling material", 0, new int[] { 1, 3 })
+            Tool tool7 = new Tool("Flooring tool levelling material", 6, new int[] { 1, 3 })
             {
 
             };
-            Tool tool8 = new Tool("Flooring tool levelling tool", 0, new int[] { 1, 2 })
+            Tool tool8 = new Tool("Flooring tool levelling tool", 3, new int[] { 1, 2 })
             {
 
             };
-            Tool tool9 = new Tool("Flooring tool floor laser", 0, new int[] { 1, 1 })
+            Tool tool9 = new Tool("Flooring tool floor laser", 2, new int[] { 1, 1 })
             {
 
             };
-            Tool tool10 = new Tool("Flooring tool hand tool", 0, new int[] { 1, 4 })
+            Tool tool10 = new Tool("Flooring tool hand tool", 1, new int[] { 1, 4 })
             {
 
             };
