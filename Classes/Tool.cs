@@ -30,12 +30,14 @@ namespace ToolLoan
             this.NoBorrowings = 0;
         }
 
+        // DIDNT NEED THIS
         public void addBorrower(Member member)
         {
             // this.MemberBorrowing = member;
 
         }
 
+        // DIDNT NEED THIS
         public void deleteBorrower(Member Member)
         {
 
@@ -44,7 +46,7 @@ namespace ToolLoan
         public override string ToString()
         {
             //return a string containning the name and the available quantity quantity this tool 
-            return "";
+            return $"{this.Name}: {this.AvailableQuantity}";
 
         }
     }

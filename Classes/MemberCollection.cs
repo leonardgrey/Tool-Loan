@@ -70,8 +70,6 @@ namespace ToolLoan.Classes
 
         public Member[] toArray()
         {
-            var t = MemberCollections.PreOrderTraverse().ToList();
-
             return MemberCollections.PreOrderTraverse()
                     .ToList()
                     .Select(i => (Member) i )

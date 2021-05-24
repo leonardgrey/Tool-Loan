@@ -178,7 +178,6 @@ namespace BSTreeClass
 
 		public IEnumerable<IComparable> PreOrderTraverse()
 		{
-			List<IComparable> mem = new List<IComparable>();
 			return PreOrderTraverse(root);
 		}
 

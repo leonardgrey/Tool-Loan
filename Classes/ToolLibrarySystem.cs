@@ -106,6 +106,16 @@ namespace ToolLoan.Classes
 
         public void delete(Member member)
         {
+            for (int i = 0; i < 3; i++)
+            {
+                try
+                {
+                    this.returnTool(member, member.Tools[0]);
+                }
+                catch (Exception)
+                { }
+            }
+
             this.MemberCollection.delete(member);
         }
 
@@ -179,6 +189,38 @@ namespace ToolLoan.Classes
             {
                 t.Add(heapSort(item.toArray(), item.toArray().Length));
             }
+
+            List<Tool> allTools = new List<Tool>();
+            for (int i = 0; i < t.Count; i++)
+            {
+                Array.Reverse(t[i]);
+                // get top 3 of each and heap sort again
+                for (int j = 0; j < 2; j++)
+                {
+                    try
+                    {
+                        allTools.Add(t[i][j]);
+                    }
+                    catch (Exception)
+                    { }
+
+                }
+            }
+            var arrTools = allTools.ToArray();
+            heapSort(arrTools, arrTools.Length);
+            Array.Reverse(arrTools);
+
+            Console.WriteLine("\nHeres the top three most borrowed tools\n");
+            Console.WriteLine(lineBreak);
+            String s = String.Format("{0, -50} {1, -10}\n\n",  "Tool Name", "No. of rentings");
+            for (int i = 0; i < 3; i++)
+            {
+                s += String.Format("{0, -50} {1, -10}", $"{i + 1}. {arrTools[i].Name}", arrTools[i].NoBorrowings);
+                s += "\n";
+            }
+            Console.WriteLine($"{s}");
+            Console.WriteLine(lineBreak);
+
 
             Console.ReadLine();
 
@@ -268,6 +310,16 @@ namespace ToolLoan.Classes
                 heapify(tools, n, largest);
             }
             return tools;
+        }
+
+        private Tool[] ResizeArray(Tool[] arrayToResize)
+        {
+            Tool[] TempArray = new Tool[arrayToResize.Length + 1];
+            for (int i = 0; i < arrayToResize.Length; i++)
+            {
+                TempArray[i] = arrayToResize[i];
+            }
+            return TempArray;
         }
 
         private void TempTools()

@@ -84,7 +84,7 @@ namespace ToolLoan
         public int CompareTo(object obj)
         {
             Member t = (Member)obj;
-            return Username.CompareTo(t.Username);
+            return this.Username.CompareTo(t.Username);
         }
 
     }
