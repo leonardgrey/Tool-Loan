@@ -21,7 +21,6 @@ namespace ToolLoan.Classes
             this.CurrentUser = null;
 
             CreateToolCollections();
-            TempTools();
         }
 
         public void add(Tool tool)
@@ -322,49 +321,5 @@ namespace ToolLoan.Classes
             return TempArray;
         }
 
-        private void TempTools()
-        {
-            Tool tool1 = new Tool("tool", 3, new int[] { 0, 0 })
-            {
-
-            };
-            Tool tool3 = new Tool("Gardening line trimmer", 2, new int[] { 0, 0 })
-            {
-
-            };
-            Tool tool4 = new Tool("Gardening hand tool", 3, new int[] { 2, 2 })
-            {
-
-            };
-            Tool tool5 = new Tool("Gardening wheelbarrow", 5, new int[] { 0, 3 })
-            {
-
-            };
-            Tool tool7 = new Tool("Flooring tool levelling material", 6, new int[] { 1, 3 })
-            {
-
-            };
-            Tool tool8 = new Tool("Flooring tool levelling tool", 3, new int[] { 1, 2 })
-            {
-
-            };
-            Tool tool9 = new Tool("Flooring tool floor laser", 2, new int[] { 1, 1 })
-            {
-
-            };
-            Tool tool10 = new Tool("Flooring tool hand tool", 1, new int[] { 1, 4 })
-            {
-
-            };
-            add(tool1);
-            add(tool3);
-            add(tool4);
-            add(tool5);
-            add(tool7);
-            add(tool8);
-            add(tool9);
-            add(tool10);
-
-        }
     }
 }

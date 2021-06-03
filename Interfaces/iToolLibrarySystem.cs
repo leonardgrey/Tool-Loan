@@ -17,7 +17,7 @@ namespace Interfaces
 
         void delete(Tool tool, int amountOfPieces); //remove some pieces of a tool from the system
 
-        void add(Member tool); //add a new memeber to the system
+        void add(Member member); //add a new memeber to the system
 
         void delete(Member tool); //delete a member from the system
 
